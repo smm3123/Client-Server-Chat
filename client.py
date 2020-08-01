@@ -15,9 +15,9 @@ PORT = 65432
 ADDRESS = (HOST, PORT)
 QUIT_MSG = "/q"
 
-with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-    s.connect(ADDRESS)
-    s.sendall(b"Test message")
-    data = s.recv(1024)
+with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as client:
+    client.connect(ADDRESS)
+    client.sendall(b"Test message")
+    data = client.recv(1024)
 
 print('Received', repr(data))

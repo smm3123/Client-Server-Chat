@@ -15,11 +15,11 @@ PORT = 65432
 ADDRESS = (HOST, PORT)
 QUIT_MSG = "/q"
 
-with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-    s.bind(ADDRESS)
-    s.listen()
+with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as server:
+    server.bind(ADDRESS)
+    server.listen()
     print("Server listening on: " + HOST + " on port " + str(PORT) + "...")
-    connection, address = s.accept()
+    connection, address = server.accept()
     with connection:
         print("Connected by", address)
         while True:
