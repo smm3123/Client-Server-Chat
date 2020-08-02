@@ -9,7 +9,7 @@ Sources:
 """
 
 import socket
-import constants
+from src import constants
 
 
 def connect_client():
