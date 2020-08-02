@@ -9,27 +9,27 @@ Sources:
 """
 
 import socket
+import constants
 
-HOST = "localhost"
-PORT = 65432
-ADDRESS = (HOST, PORT)
-QUIT_MSG = "/q"
+
+def connect_client():
+    client.connect(constants.ADDRESS)
+    print("Connected to: " + constants.HOST + " on port " + str(constants.PORT))
+    print("Type /q to quit\nEnter a message to send...\n")
+
 
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as client:
-    client.connect(ADDRESS)
-    print("Connected to: " + HOST + " on port " + str(PORT))
-    print("Type /q to quit\nEnter a message to send...")
+    connect_client()
 
     connected = True
     while connected:
         message = input(">")
 
-        if message == QUIT_MSG:
+        if message == constants.QUIT_MSG:
             connected = False
 
         client.sendall(message.encode())
-        data = client.recv(1024)
-        received_message = data.decode()
-        if received_message == QUIT_MSG:
+        received_message = client.recv(1024).decode()
+        if received_message == constants.QUIT_MSG:
             connected = False
         print(received_message)

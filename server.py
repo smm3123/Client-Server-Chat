@@ -9,37 +9,42 @@ Sources:
 """
 
 import socket
+import constants
 
-HOST = "localhost"
-PORT = 65432
-ADDRESS = (HOST, PORT)
-QUIT_MSG = "/q"
+
+def start_server():
+    """Initializes server and begins listening"""
+    server.bind(constants.ADDRESS)
+    server.listen()
+    print("Server listening on: " + constants.HOST + " on port " + str(constants.PORT) + "...")
+
+
+def print_connection_messages():
+    print("Connected by", address)
+    print("Type /q to quit\nWaiting for message...\n")
+
 
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as server:
-    server.bind(ADDRESS)
-    server.listen()
-
-    print("Server listening on: " + HOST + " on port " + str(PORT) + "...")
+    start_server()
 
     connection, address = server.accept()
-    connected = True
 
     with connection:
-        print("Connected by", address)
-        print("Type /q to quit\nWaiting for message...")
+        print_connection_messages()
+        connected = True
 
         while connected:
             data = connection.recv(1024)
-
             if not data:
                 continue
 
             received_message = data.decode()
-            if received_message == QUIT_MSG:
+            print(received_message)
+
+            if received_message == constants.QUIT_MSG:
                 connected = False
             else:
-                print(received_message)
                 message = input(">")
-                if message == QUIT_MSG:
+                if message == constants.QUIT_MSG:
                     connected = False
                 connection.sendall(message.encode())
