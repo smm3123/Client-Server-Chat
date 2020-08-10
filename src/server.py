@@ -22,21 +22,16 @@ def print_connection_messages():
 
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as server:
     start_server()
-
     connection, address = server.accept()
-
     with connection:
         print_connection_messages()
         connected = True
-
         while connected:
             data = connection.recv(1024)
             if not data:
                 continue
-
             received_message = data.decode()
             print(received_message)
-
             if received_message == constants.QUIT_MSG:
                 connected = False
             else:

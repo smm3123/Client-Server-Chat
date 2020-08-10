@@ -16,14 +16,11 @@ def connect_client():
 
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as client:
     connect_client()
-
     connected = True
     while connected:
         message = input(">")
-
         client.sendall(message.encode())
         received_message = client.recv(1024).decode()
         print(received_message)
-
         if received_message == constants.QUIT_MSG or message == constants.QUIT_MSG:
             connected = False
